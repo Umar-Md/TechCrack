@@ -1,0 +1,24 @@
+techcrack-website/
+├── public/                 # 3D Models (.glb), textures, and robots.txt
+├── src/
+│   ├── assets/             # Static images/icons
+│   ├── components/
+│   │   ├── 3d/             # R3F Canvas and 3D Models
+│   │   │   ├── TechCore.jsx
+│   │   │   └── Scene.jsx
+│   │   ├── ui/             # Tailwind-styled UI components
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── ProjectCard.jsx
+│   │   │   └── GlassCard.jsx
+│   │   └── marketplace/    # Shop-specific components
+│   ├── hooks/              # Custom React hooks (e.g., useMousePosition)
+│   ├── pages/              # Route components
+│   │   ├── Home.jsx        # Landing page with 3D Hero
+│   │   ├── Marketplace.jsx # Shop for Projects
+│   │   └── Services.jsx    # SEO & Web Dev details
+│   ├── styles/             # Global CSS
+│   ├── App.jsx             # Router and Global Providers
+│   └── main.jsx            # Entry point
+├── index.html              # Main entry (Vite specific)
+├── tailwind.config.js
+└── vite.config.js
