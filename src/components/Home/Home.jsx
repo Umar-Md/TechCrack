@@ -1,10 +1,11 @@
-import HeroContent from './HeroContent';
-import BackgroundVideo from './BackgroundVideo';
-import Scene from '../3d/Scene';
-import About from '../About/About';      
-import Services from '../Services/Services';
-import TechStack from '../TechStack/TechStack';
-import Projects from '../Project/Projects'; 
+import HeroContent from "./HeroContent";
+import BackgroundVideo from "./BackgroundVideo";
+import Scene from "../3d/Scene";
+import About from "../About/About";
+import Services from "../Services/Services";
+import TechStack from "../TechStack/TechStack";
+import Projects from "../Project/Projects";
+import WhyChooseUs from "../WhyChooseUs/WhyChooseUs";
 
 // Small helper function for the Hero Layer
 const HeroLayer = () => (
@@ -39,10 +40,13 @@ const Home = () => {
         <TechStack />
       </div>
 
-       <div id="projects">
+      <div id="projects">
         <Projects />
       </div>
 
+      <div id="why-choose-us">
+        <WhyChooseUs />
+      </div>
     </div>
   );
 };
