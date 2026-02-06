@@ -6,6 +6,7 @@ import About from './components/About/About';
 import Marketplace from './pages/Marketplace';
 import Services from './components/Services/Services';
 import TechStack from './components/TechStack/TechStack';
+import Projects from './components/Project/Projects';
 
 const AppRoutes = () => (
   <Routes>
@@ -15,8 +16,8 @@ const AppRoutes = () => (
     {/* These routes allow direct access to single pages */}
     <Route path="/about" element={<About />} />
     <Route path="/services" element={<Services />} />
-    <Route path="/marketplace" element={<Marketplace />} />
     <Route path="/techstack" element={<TechStack />} />
+    <Route path="/projects" element={<Projects />} />
   </Routes>
 );
 

@@ -6,8 +6,8 @@ const NAV_DATA = [
   { id: 1, label: "Home", path: "/" },
   { id: 2, label: "About", path: "/about" },
   { id: 3, label: "Services", path: "/services" },
-  { id: 4, label: "Tech Stack", path: "/#tech" },
-  { id: 5, label: "Projects", path: "/marketplace" },
+  { id: 4, label: "Tech Stack", path: "/techstack" },
+  { id: 5, label: "Projects", path: "/projects" },
   { id: 6, label: "Process", path: "/#process" },
 ];
 
