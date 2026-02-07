@@ -8,6 +8,7 @@ import Services from './components/Services/Services';
 import TechStack from './components/TechStack/TechStack';
 import Projects from './components/Project/Projects';
 import WhyChooseUs from './components/WhyChooseUs/WhyChooseUs';
+import Process from './components/Process/Process';
 
 const AppRoutes = () => (
   <Routes>
@@ -20,6 +21,7 @@ const AppRoutes = () => (
     <Route path="/techstack" element={<TechStack />} />
     <Route path="/projects" element={<Projects />} />
     <Route path="/why-choose-us" element={<WhyChooseUs />} />
+    <Route path="/process" element={<Process />} />
   </Routes>
 );
 

@@ -6,6 +6,7 @@ import Services from "../Services/Services";
 import TechStack from "../TechStack/TechStack";
 import Projects from "../Project/Projects";
 import WhyChooseUs from "../WhyChooseUs/WhyChooseUs";
+import Process from "../Process/Process";
 
 // Small helper function for the Hero Layer
 const HeroLayer = () => (
@@ -47,6 +48,11 @@ const Home = () => {
       <div id="why-choose-us">
         <WhyChooseUs />
       </div>
+
+      <div id="process">
+        <Process />
+      </div>
+
     </div>
   );
 };
