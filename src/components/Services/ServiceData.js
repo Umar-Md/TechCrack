@@ -1,4 +1,4 @@
-import { Code, Search, Layout, Cpu, Globe, BarChart } from 'lucide-react';
+import { Code, Search, Globe, FileCheck } from 'lucide-react';
 
 export const SERVICES_LIST = [
   {
@@ -16,17 +16,18 @@ export const SERVICES_LIST = [
     recommended: true
   },
   {
-    id: 'ui-ux',
-    title: "3D Interactive Design",
-    desc: "Immersive user experiences using Three.js and R3F to make your brand stand out.",
-    icon: Layout,
+    id: 'wordpress',
+    title: "WordPress Solutions",
+    desc: "Custom CMS development, theme optimization, and high-speed WooCommerce architectures.",
+    icon: Globe,
     recommended: false
   },
   {
-    id: 'api',
-    title: "Custom API Solutions",
-    desc: "Building scalable, secure, and well-documented APIs for your business ecosystem.",
-    icon: Cpu,
-    recommended: false
+    id: 'resume-ai',
+    title: "Resume Score Checker",
+    desc: "AI-driven ATS analysis to optimize your engineering resume for top-tier tech roles.",
+    icon: FileCheck,
+    recommended: false,
+    path: '/resume-ai' // Target route
   }
 ];

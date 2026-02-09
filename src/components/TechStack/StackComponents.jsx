@@ -18,7 +18,7 @@ export const TechCard = ({ name, icon: Icon, color }) => (
 export const StackGroup = ({ title, children }) => (
   <div className="space-y-6">
     <div className="flex items-center gap-4">
-      <h3 className="text-xs font-black uppercase tracking-[0.3em] text-cyan-500/80">
+      <h3 className="text-xl font-black  text-cyan-500/80">
         {title}
       </h3>
       <div className="h-px flex-1 bg-linear-to-r from-cyan-500/20 to-transparent" />

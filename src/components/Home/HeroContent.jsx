@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 
 const Branding = () => (
   <header>
-    <h1 className="text-6xl font-black tracking-tighter text-white md:text-8xl uppercase">
+    <h1 className="text-6xl font-black text-white md:text-8xl ">
       Tech<span className="text-cyan-500">Crack</span>
     </h1>
-    <p className="mt-4 text-sm font-mono tracking-[0.3em] text-cyan-400 uppercase md:text-lg">
+    <p className="mt-4 text-sm font-mono text-cyan-400 md:text-lg">
       Cracking the Code of the Future
     </p>
   </header>
@@ -27,7 +27,7 @@ const Actions = () => (
       <motion.button
         whileHover={{ scale: 1.05, backgroundColor: "#b3cfe5", color: "#000000" }}
         whileTap={{ scale: 0.95 }}
-        className="group flex items-center gap-3 rounded-full border border-cyan-500/50 bg-cyan-500/10 px-8 py-4 text-xs font-black uppercase tracking-widest text-cyan-400 transition-all shadow-[0_0_20px_rgba(6,182,212,0.2)]"
+        className="group flex items-center gap-3 rounded-full border border-cyan-500/50 bg-cyan-500/10 px-8 py-4 text-s font-black text-cyan-400 transition-all shadow-[0_0_20px_rgba(6,182,212,0.2)]"
       >
         View Capabilities
         <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />

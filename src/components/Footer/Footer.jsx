@@ -20,9 +20,9 @@ const Footer = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
               </span>
-              <span className="text-cyan-500 text-xs font-mono uppercase tracking-widest">Available for hire</span>
+              <span className="text-cyan-500 text-s font-mono ">Available for hire</span>
             </div>
-            <p className="text-gray-500 text-xs leading-relaxed">
+            <p className="text-gray-500 text-s leading-relaxed">
               Accepting project inquiries for 2026. Let's build something epic.
             </p>
           </div>

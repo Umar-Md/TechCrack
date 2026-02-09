@@ -4,12 +4,11 @@ import { SERVICES_LIST } from './ServiceData';
 
 const ServicesHeader = () => (
   <div className="mb-16">
-    <span className="text-cyan-500 font-mono text-sm tracking-[0.5em] uppercase">Capabilities</span>
-    <h1 className="text-6xl font-black text-white mt-2 uppercase tracking-tighter">
+    <span className="text-cyan-500 font-mono text-m ">Capabilities</span>
+    <h1 className="text-6xl font-black text-white mt-2">
       Our <span className="text-cyan-500">Services</span>
     </h1>
     <p className="text-gray-400 mt-4 max-w-xl">
-      We provide end-to-end technical solutions designed to scale your startup from 0 to 1.
     </p>
   </div>
 );

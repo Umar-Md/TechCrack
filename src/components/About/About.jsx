@@ -4,8 +4,8 @@ import { GlassSection } from './AboutCards';
 
 const AboutPageHeader = () => (
   <div className="mb-16">
-    <span className="text-cyan-500 font-mono text-sm tracking-[0.5em] uppercase">Discovery</span>
-    <h1 className="text-6xl font-black text-white mt-2 uppercase tracking-tighter">Our Story</h1>
+    <span className="text-cyan-500 font-mono text-m ">Discovery</span>
+    <h1 className="text-6xl font-black text-white mt-2 ">Our Story</h1>
   </div>
 );
 

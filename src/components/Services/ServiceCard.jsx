@@ -7,7 +7,7 @@ export const ServiceCard = ({ title, desc, icon: Icon, recommended }) => (
     className="relative group p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl transition-all hover:border-cyan-500/50 cursor-pointer"
   >
     {recommended && (
-      <span className="absolute top-4 right-4 bg-cyan-500 text-black text-[9px] font-black uppercase px-2 py-1 rounded">
+      <span className="absolute top-4 right-4 bg-cyan-500 text-black text-[9px] font-black  px-2 py-1 rounded">
         Recommended
       </span>
     )}
@@ -16,7 +16,7 @@ export const ServiceCard = ({ title, desc, icon: Icon, recommended }) => (
       <Icon size={24} />
     </div>
 
-    <h3 className="text-xl font-bold text-white mb-3 uppercase tracking-tight">{title}</h3>
+    <h3 className="text-xl font-bold text-white mb-3  ">{title}</h3>
     <p className="text-gray-400 text-sm leading-relaxed">{desc}</p>
   </motion.div>
 );

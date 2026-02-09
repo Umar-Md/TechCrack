@@ -4,8 +4,8 @@ import { TechCard, StackGroup } from './StackComponents';
 
 const TechStackHeader = () => (
   <div className="mb-16">
-    <span className="text-cyan-500 font-mono text-sm tracking-[0.5em] uppercase">Core</span>
-    <h2 className="text-5xl font-black text-white mt-2 uppercase tracking-tighter">
+    <span className="text-cyan-500 font-mono text-m ">Core</span>
+    <h2 className="text-5xl font-black text-white mt-2 ">
       Engineered <span className="text-cyan-500">Stack</span>
     </h2>
   </div>

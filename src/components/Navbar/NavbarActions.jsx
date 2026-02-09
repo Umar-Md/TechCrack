@@ -17,9 +17,9 @@ export const HireButton = () => (
     <motion.button
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      className="bg-transparent text-white px-7 py-2.5 rounded-full text-[12px] font-black hover:bg-cyan-600 transition-all shadow-[0_0_20px_rgba(6,182,212,0.8)]"
+      className="bg-transparent text-white px-7 py-2.5 rounded-full text-[14px] font-black hover:bg-cyan-600 transition-all shadow-[0_0_20px_rgba(6,182,212,0.8)]"
     >
-      Hire Us
+      Contact Us
     </motion.button>
   </Link>
 );

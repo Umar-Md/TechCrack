@@ -5,7 +5,7 @@ const FooterLinks = () => {
   const links = ['Home', 'Services', 'Process', 'Contact'];
   return (
     <div>
-      <h4 className="text-white font-bold uppercase tracking-widest text-[10px] mb-6 opacity-50">Navigation</h4>
+      <h4 className="text-white font-bold  text-[12px] mb-6 opacity-50">Navigation</h4>
       <ul className="space-y-4">
         {links.map((link) => (
           <li key={link}>

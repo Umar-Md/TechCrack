@@ -4,8 +4,8 @@ import { ReasonCard } from './ReasonCard';
 
 const WhyChooseHeader = () => (
   <div className="max-w-3xl mb-16">
-    <span className="text-cyan-500 font-mono text-xs tracking-[0.5em] uppercase">The Edge</span>
-    <h2 className="text-5xl font-black text-white mt-4 uppercase tracking-tighter">
+    <span className="text-cyan-500 font-mono text-s ">The Edge</span>
+    <h2 className="text-5xl font-black text-white mt-4  ">
       Why Partner With <span className="text-cyan-500">TechCrack?</span>
     </h2>
     <p className="text-gray-400 mt-6 text-lg font-light">

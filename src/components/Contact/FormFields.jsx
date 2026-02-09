@@ -2,7 +2,7 @@ import React from 'react';
 
 export const InputField = ({ label, type = "text", name, placeholder, required = true }) => (
   <div className="flex flex-col gap-2 mb-4">
-    <label className="text-xs font-black uppercase tracking-widest text-cyan-500/80">
+    <label className="text-s font-black text-cyan-500/80">
       {label}
     </label>
     <input

@@ -3,7 +3,7 @@ import { TechBadge } from './AboutCards';
 
 export const WhoWeAreContent = () => (
   <div className="space-y-4">
-    <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter">
+    <h2 className="text-4xl md:text-5xl font-black text-white ">
       Who We <span className="text-cyan-500">Are</span>
     </h2>
     <p className="text-gray-400 text-lg leading-relaxed max-w-2xl font-light">
@@ -16,7 +16,7 @@ export const WhoWeAreContent = () => (
 );
 
 export const TechGrid = () => {
-  const techs = ["React", "Three.js", "Vite", "Tailwind", "Node.js", "Framer Motion", "PostgreSQL", "Python"];
+  const techs = ["React","Vite", "Tailwind", "Node.js", "Angular", "MongoDB","HTML5", "CSS3", "JavaScript"];
   return (
     <div className="flex flex-wrap gap-3 mt-4">
       {techs.map((t) => (
