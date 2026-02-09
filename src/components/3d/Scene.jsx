@@ -43,8 +43,8 @@ const Scene = () => {
           {/* Adds a soft shadow under the 3D model for realism */}
           <ContactShadows 
             position={[0, -2.5, 0]} 
-            opacity={0.4} 
-            scale={10} 
+            opacity={0.2} 
+            scale={20} 
             blur={2} 
             far={4.5} 
           />

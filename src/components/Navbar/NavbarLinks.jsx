@@ -8,7 +8,8 @@ const NAV_DATA = [
   { id: 3, label: "Services", path: "/services" },
   { id: 4, label: "Tech Stack", path: "/techstack" },
   { id: 5, label: "Projects", path: "/projects" },
-  { id: 6, label: "Process", path: "/#process" },
+  { id: 6, label: "Process", path: "/process" },
+
 ];
 
 // 2. Smallest Unit: Individual Link

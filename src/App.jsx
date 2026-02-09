@@ -3,12 +3,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import Home from './components/Home/Home'; 
 import About from './components/About/About';
-import Marketplace from './pages/Marketplace';
 import Services from './components/Services/Services';
 import TechStack from './components/TechStack/TechStack';
 import Projects from './components/Project/Projects';
 import WhyChooseUs from './components/WhyChooseUs/WhyChooseUs';
 import Process from './components/Process/Process';
+import ProjectShowcase from './components/Project/ProjectShowcase';
+import Contact from './components/Contact/Contact';
 
 const AppRoutes = () => (
   <Routes>
@@ -22,6 +23,8 @@ const AppRoutes = () => (
     <Route path="/projects" element={<Projects />} />
     <Route path="/why-choose-us" element={<WhyChooseUs />} />
     <Route path="/process" element={<Process />} />
+    <Route path="/projectshowcase" element={<ProjectShowcase />} />
+    <Route path="/contact" element={<Contact />} />
   </Routes>
 );
 

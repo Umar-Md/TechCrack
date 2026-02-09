@@ -14,8 +14,10 @@ const BackgroundVideo = () => {
         <source src={bgVideo} type="video/mp4" />
       </video>
       
-      {/* Visual Overlay to ensure text pops */}
-      <div className="absolute inset-0 bg-linear-to-b from-black via-transparent to-black" />
+      {/* CLEAN OVERLAY: 
+          Removed the 'inset-80' divs that created the dark center.
+          This single line ensures the video is slightly dimmed globally for text contrast.
+      */}
       <div className="absolute inset-0 bg-black/20" /> 
     </div>
   );
