@@ -10,6 +10,7 @@ import WhyChooseUs from './components/WhyChooseUs/WhyChooseUs';
 import Process from './components/Process/Process';
 import ProjectShowcase from './components/Project/ProjectShowcase';
 import Contact from './components/Contact/Contact';
+import ResumeAI from './components/ResumeAI/ResumeAI';
 
 const AppRoutes = () => (
   <Routes>
@@ -25,6 +26,7 @@ const AppRoutes = () => (
     <Route path="/process" element={<Process />} />
     <Route path="/projectshowcase" element={<ProjectShowcase />} />
     <Route path="/contact" element={<Contact />} />
+    <Route path="/resumeai" element={<ResumeAI />} />
   </Routes>
 );
 

@@ -10,6 +10,7 @@ import WhyChooseUs from "../WhyChooseUs/WhyChooseUs";
 import Process from "../Process/Process";
 import Contact from "../Contact/Contact";
 import Footer from "../Footer/Footer";
+import ResumeAI from "../ResumeAI/ResumeAI";
 
 const HeroLayer = () => (
   <div className="relative min-h-screen w-full overflow-hidden">
@@ -40,7 +41,9 @@ const Home = () => {
       <div id="why-choose-us"><WhyChooseUs /></div>
       <div id="process"><Process /></div>
       <div id="contact"><Contact /></div>
+      <div id="resumeai"><ResumeAI /></div>
       <div id="footer"><Footer /></div>
+
     </div>
   );
 };
