@@ -38,7 +38,7 @@ const Contact = () => {
           
           {/* Left Side: Contact Details */}
           <div className="flex flex-col justify-center">
-            <span className="text-cyan-500 font-mono text-xs mb-4">
+            <span className="text-cyan-500 font-mono text-s mb-4">
               Get in Touch
             </span>
             <h2 className="text-6xl font-black text-white mb-8 italic ">

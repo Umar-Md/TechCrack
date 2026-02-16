@@ -16,7 +16,7 @@ export const WhoWeAreContent = () => (
 );
 
 export const TechGrid = () => {
-  const techs = ["React","Vite", "Tailwind", "Node.js", "Angular", "MongoDB","HTML5", "CSS3", "JavaScript"];
+  const techs = ["React","Vite", "Tailwind", "Node.js", "Angular", "MongoDB","HTML5", "CSS3", "JavaScript", "Next.js","Figma","Express.js","Bootstrap"];
   return (
     <div className="flex flex-wrap gap-3 mt-4">
       {techs.map((t) => (

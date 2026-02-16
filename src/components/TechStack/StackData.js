@@ -8,7 +8,8 @@ import {
   Code2, 
   Paintbrush, 
   Terminal,
-  Server
+  Server,
+  Figma 
 } from 'lucide-react';
 
 export const TECH_CATEGORIES = [
@@ -20,6 +21,7 @@ export const TECH_CATEGORIES = [
       { name: "CSS3", icon: Paintbrush, color: "text-blue-600" },
       { name: "JavaScript", icon: Terminal, color: "text-yellow-400" },
       { name: "TypeScript", icon: Settings, color: "text-blue-500" },
+      { name: "Figma", icon: Figma, color: "text-purple-500" },
     ]
   },
   {

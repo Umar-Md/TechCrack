@@ -11,6 +11,7 @@ import Process from "../Process/Process";
 import Contact from "../Contact/Contact";
 import Footer from "../Footer/Footer";
 import ResumeAI from "../ResumeAI/ResumeAI";
+import Resources from '../Resources/Resources';
 
 const HeroLayer = () => (
   <div className="relative min-h-screen w-full overflow-hidden">
@@ -43,7 +44,7 @@ const Home = () => {
       <div id="contact"><Contact /></div>
       <div id="resumeai"><ResumeAI /></div>
       <div id="footer"><Footer /></div>
-
+      <div id="resources"><Resources /></div>
     </div>
   );
 };
