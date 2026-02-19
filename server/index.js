@@ -1,43 +1,91 @@
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
-const dotenv = require('dotenv');
+const express = require("express");
+const cors = require("cors");
+const path = require("path");
+const dotenv = require("dotenv");
 
-// 1. FORCE LOAD with Absolute Path
-const envPath = path.join(__dirname, '.env');
-const result = dotenv.config({ path: envPath });
+/*
+=========================
+LOAD ENV FILE
+=========================
+*/
+dotenv.config({
+  path: path.join(__dirname, ".env"),
+});
 
 const app = express();
 
-// 2. Middleware
-app.use(cors()); 
-app.use(express.json()); 
+/*
+=========================
+MIDDLEWARE
+=========================
+*/
+app.use(cors());
 
-// 3. Import Routes
-const contactRoutes = require('./routes/contactRoutes');
-const paymentRoutes = require('./routes/paymentRoutes');
+app.use(express.json());
 
-// 4. Routes
-app.get('/', (req, res) => {
-  res.send('🚀 TechCrack Server is Live!');
+app.use(express.urlencoded({ extended: true }));
+
+/*
+=========================
+SERVE PDFs SECURE DOWNLOAD
+=========================
+*/
+app.use(
+  "/pdfs",
+  express.static(path.join(__dirname, "assets/pdfs"), {
+    setHeaders: (res, filePath) => {
+
+      // force download instead of open in browser
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename="${path.basename(filePath)}"`
+      );
+
+      res.setHeader(
+        "Content-Type",
+        "application/pdf"
+      );
+    },
+  })
+);
+
+/*
+=========================
+ROUTES
+=========================
+*/
+const paymentRoutes = require("./routes/paymentRoutes");
+
+app.use("/api/payment", paymentRoutes);
+
+/*
+=========================
+HEALTH CHECK ROUTE
+=========================
+*/
+app.get("/", (req, res) => {
+  res.send("🚀 TechCrack Server Running");
 });
 
-app.use('/api/contact', contactRoutes);
-app.use('/api/payment', paymentRoutes);
+/*
+=========================
+DEBUG ENV
+=========================
+*/
+console.log("=================================");
+console.log("EMAIL_USER Loaded:", !!process.env.EMAIL_USER);
+console.log("EMAIL_PASS Loaded:", !!process.env.EMAIL_PASS);
+console.log("RAZORPAY_KEY_ID Loaded:", !!process.env.RAZORPAY_KEY_ID);
+console.log("RAZORPAY_SECRET Loaded:", !!process.env.RAZORPAY_KEY_SECRET);
+console.log("=================================");
 
-// 5. Start Server
+/*
+=========================
+START SERVER
+=========================
+*/
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log(`📂 Searching for .env at: ${envPath}`);
-  
-  if (result.error) {
-    console.error("❌ .env Load Error:", result.error.message);
-  }
 
-  // Debugging: If these are false, your keys aren't being read!
-  console.log("-----------------------------------------");
-  console.log("Razorpay Key ID present:    ", !!process.env.RAZORPAY_KEY_ID);
-  console.log("Razorpay Secret present:    ", !!process.env.RAZORPAY_KEY_SECRET);
-  console.log("-----------------------------------------");
+app.listen(PORT, () => {
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
 });

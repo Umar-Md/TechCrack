@@ -1,72 +1,149 @@
-const Razorpay = require('razorpay');
-const crypto = require('crypto');
-const path = require('path');
-const fs = require('fs');
-const transporter = require('../config/mail');
+const Razorpay = require("razorpay");
+const crypto = require("crypto");
+const path = require("path");
+const fs = require("fs");
+const sendMail = require("../config/mail");
 
+/*
+==============================
+CREATE ORDER
+==============================
+*/
 exports.createOrder = async (req, res) => {
   try {
     const { amount } = req.body;
+
+    if (!amount) {
+      return res.status(400).json({
+        status: "error",
+        message: "Amount is required",
+      });
+    }
+
     const razorpay = new Razorpay({
       key_id: process.env.RAZORPAY_KEY_ID,
       key_secret: process.env.RAZORPAY_KEY_SECRET,
     });
 
-    const options = {
-      amount: Math.round(Number(amount) * 100), 
+    const order = await razorpay.orders.create({
+      amount: Math.round(Number(amount) * 100),
       currency: "INR",
-      receipt: `rcpt_${Date.now()}`,
-    };
+      receipt: "receipt_" + Date.now(),
+    });
 
-    const order = await razorpay.orders.create(options);
-    res.status(200).json(order);
+    res.json(order);
+
   } catch (error) {
-    res.status(500).json({ message: "Order creation failed" });
+    console.error("Create order error:", error);
+
+    res.status(500).json({
+      status: "error",
+      message: "Order creation failed",
+    });
   }
 };
 
+
+/*
+==============================
+VERIFY PAYMENT
+==============================
+*/
 exports.verifyPayment = async (req, res) => {
   try {
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, email, pdfId } = req.body;
+    const {
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature,
+      email,
+      pdfId,
+    } = req.body;
 
-    const sign = razorpay_order_id + "|" + razorpay_payment_id;
-    const expectedSign = crypto
+    if (!email) {
+      return res.status(400).json({
+        status: "error",
+        message: "Email is required",
+      });
+    }
+
+    /*
+    VERIFY SIGNATURE
+    */
+    const body = razorpay_order_id + "|" + razorpay_payment_id;
+
+    const expectedSignature = crypto
       .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
-      .update(sign.toString())
+      .update(body)
       .digest("hex");
 
-    if (razorpay_signature !== expectedSign) {
-      return res.status(400).json({ status: "failure", message: "Invalid signature" });
+    if (expectedSignature !== razorpay_signature) {
+      return res.status(400).json({
+        status: "error",
+        message: "Invalid signature",
+      });
     }
 
-    const pdfMapping = {
-      'java-qa': 'java.pdf',
-      'js-qa': 'JavaScript.pdf',
-      'python-qa': 'Python.pdf',
-      'sql-qa': 'sql.pdf'
+    /*
+    PDF MAP
+    */
+    const pdfMap = {
+      java: "Java.pdf",
+      javascript: "JavaScript.pdf",
+      python: "Python.pdf",
+      sql: "sql.pdf",
+      email_resume_templates: "Email_Resume_templates.pdf",
+      "email-resume-templates": "Email_Resume_templates.pdf",
     };
 
-    const fileName = pdfMapping[pdfId];
-    const filePath = path.join(__dirname, '../assets/pdfs', fileName);
+    const normalized = String(pdfId).toLowerCase().trim();
+
+    const fileName = pdfMap[normalized];
+
+    if (!fileName) {
+      return res.status(400).json({
+        status: "error",
+        message: "Invalid PDF ID",
+      });
+    }
+
+    /*
+    FILE PATH
+    */
+    const filePath = path.join(
+      __dirname,
+      "..",
+      "assets",
+      "pdfs",
+      fileName
+    );
 
     if (!fs.existsSync(filePath)) {
-      console.error("File not found:", filePath);
-      return res.status(404).json({ message: "PDF missing on server" });
+      return res.status(404).json({
+        status: "error",
+        message: "PDF not found",
+      });
     }
 
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: `TechCrack: Your ${fileName} Guide`,
-      text: `Payment Successful! Your guide is attached.`,
-      attachments: [{ filename: fileName, path: filePath }]
-    };
+    /*
+    SEND EMAIL
+    */
+    await sendMail(email, filePath);
 
-    await transporter.sendMail(mailOptions);
-    res.status(200).json({ status: "success", message: "Email sent" });
+    /*
+    SUCCESS RESPONSE
+    */
+    res.json({
+      status: "success",
+      fileName,
+      downloadUrl: "/pdfs/" + fileName,
+    });
 
   } catch (error) {
-    console.error("Backend Error:", error);
-    res.status(500).json({ status: "error", message: error.message });
+    console.error("Verify error:", error);
+
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
   }
 };
