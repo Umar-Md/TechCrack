@@ -43,8 +43,8 @@ const Home = () => {
       <div id="process"><Process /></div>
       <div id="contact"><Contact /></div>
       <div id="resumeai"><ResumeAI /></div>
-      <div id="footer"><Footer /></div>
       <div id="resources"><Resources /></div>
+      <div id="footer"><Footer /></div>
     </div>
   );
 };

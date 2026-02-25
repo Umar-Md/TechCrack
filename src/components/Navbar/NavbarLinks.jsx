@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// 1. Data Structure: Isolated for easy updates
+// Data
 const NAV_DATA = [
   { id: 1, label: "Home", path: "/" },
   { id: 2, label: "About", path: "/about" },
@@ -9,30 +9,38 @@ const NAV_DATA = [
   { id: 4, label: "Tech Stack", path: "/techstack" },
   { id: 5, label: "Projects", path: "/projects" },
   { id: 6, label: "Process", path: "/process" },
-
 ];
 
-// 2. Smallest Unit: Individual Link
+// Individual Link
 const NavLinkItem = ({ label, path, onClick, isMobile }) => (
   <Link
     to={path}
     onClick={onClick}
-    className={`font-bold transition-all duration-300 hover:text-cyan-400 
-      ${isMobile ? "text-2xl py-4" : "text-[16px] text-gray-400"}`}
+    className={`font-bold transition-all duration-300 hover:text-cyan-400 ${
+      isMobile
+        ? "text-2xl text-white py-3"
+        : "text-[16px] text-gray-400"
+    }`}
   >
     {label}
   </Link>
 );
 
-// 3. Middle Unit: The List Component
+// List Component
 export const NavbarLinks = ({ isMobile = false, onLinkClick }) => (
-  <div className={isMobile ? "flex flex-col items-center" : "hidden lg:flex items-center gap-10"}>
+  <div
+    className={
+      isMobile
+        ? "flex flex-col items-center gap-4"
+        : "hidden lg:flex items-center gap-10"
+    }
+  >
     {NAV_DATA.map((link) => (
-      <NavLinkItem 
-        key={link.id} 
-        {...link} 
-        onClick={onLinkClick} 
-        isMobile={isMobile} 
+      <NavLinkItem
+        key={link.id}
+        {...link}
+        onClick={onLinkClick}
+        isMobile={isMobile}
       />
     ))}
   </div>

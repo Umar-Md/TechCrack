@@ -13,7 +13,7 @@ const Resources = () => {
 
         <div className="text-center mb-12">
 
-          <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter">
+          <h2 className="text-4xl md:text-5xl font-black text-white">
             Interview <span className="text-cyan-500">Resources</span>
           </h2>
 

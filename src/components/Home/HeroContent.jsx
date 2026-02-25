@@ -16,8 +16,7 @@ const Branding = () => (
 
 const Description = () => (
   <p className="mx-auto mt-6 max-w-xl text-base text-gray-300 md:text-lg leading-relaxed font-light">
-    Empowering startups with high-performance Fullstack Development, 
-    Technical SEO, and a marketplace for elite-tier coding projects.
+    Transforming bold ideas into high-performance digital reality—from startup MVPs to elite academic projects.
   </p>
 );
 
