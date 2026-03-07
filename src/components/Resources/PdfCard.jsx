@@ -1,5 +1,5 @@
 import React from "react";
-import PurchaseButton from "./purchaseButton";
+import PurchaseButton from "./PurchaseButton";
 const PdfCard = ({ product, userEmail }) => {
 
   return (
