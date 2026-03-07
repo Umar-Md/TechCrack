@@ -102,6 +102,7 @@
 // module.exports = sendMail;
 
 
+// server/config/mail.js
 const nodemailer = require("nodemailer");
 
 /*
@@ -124,24 +125,17 @@ SEND PDF MAIL FUNCTION (PAYMENT)
 */
 const sendMail = async (to, filePath) => {
   try {
-
-    // safety check
     if (!filePath) {
       throw new Error("filePath is required for sendMail");
     }
 
-    // Extract filename
     const fileNameWithExt =
       filePath.split("/").pop() || filePath.split("\\").pop();
 
     await transporter.sendMail({
-
       from: `"TechCrack" <${process.env.EMAIL_USER}>`,
-
       to,
-
       subject: "🚀 Your Interview Preparation Material is Ready!",
-
       text: `Hi,
 
 Thank you for purchasing our interview preparation material.
@@ -150,40 +144,28 @@ Your material is attached.
 
 Best regards,
 TechCrack Team`,
-
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
-          
           <h2 style="color: #2E86C1;">
             🚀 Your Interview Preparation Material is Ready!
           </h2>
-
           <p>Hi there,</p>
-
           <p>Your material is attached to this email.</p>
-
           <p>Best regards,<br><strong>TechCrack Team</strong></p>
-
         </div>
       `,
-
       attachments: [
         {
           filename: fileNameWithExt,
           path: filePath,
         },
       ],
-
     });
 
     console.log("PDF Mail sent successfully to:", to);
-
   } catch (error) {
-
     console.error("Mail sending error:", error);
-
     throw new Error("Mail sending failed: " + error.message);
-
   }
 };
 

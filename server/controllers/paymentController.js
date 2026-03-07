@@ -1,8 +1,9 @@
+// server/controllers/paymentController.js
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
 const path = require("path");
 const fs = require("fs");
-const sendMail = require("../config/mail");
+const { sendMail } = require("../config/mail"); // fixed import
 
 /*
 ==============================
@@ -32,7 +33,6 @@ exports.createOrder = async (req, res) => {
     });
 
     res.json(order);
-
   } catch (error) {
     console.error("Create order error:", error);
 
@@ -42,7 +42,6 @@ exports.createOrder = async (req, res) => {
     });
   }
 };
-
 
 /*
 ==============================
@@ -66,9 +65,6 @@ exports.verifyPayment = async (req, res) => {
       });
     }
 
-    /*
-    VERIFY SIGNATURE
-    */
     const body = razorpay_order_id + "|" + razorpay_payment_id;
 
     const expectedSignature = crypto
@@ -83,9 +79,6 @@ exports.verifyPayment = async (req, res) => {
       });
     }
 
-    /*
-    PDF MAP
-    */
     const pdfMap = {
       java: "Java.pdf",
       javascript: "JavaScript.pdf",
@@ -96,7 +89,6 @@ exports.verifyPayment = async (req, res) => {
     };
 
     const normalized = String(pdfId).toLowerCase().trim();
-
     const fileName = pdfMap[normalized];
 
     if (!fileName) {
@@ -106,16 +98,7 @@ exports.verifyPayment = async (req, res) => {
       });
     }
 
-    /*
-    FILE PATH
-    */
-    const filePath = path.join(
-      __dirname,
-      "..",
-      "assets",
-      "pdfs",
-      fileName
-    );
+    const filePath = path.join(__dirname, "..", "assets", "pdfs", fileName);
 
     if (!fs.existsSync(filePath)) {
       return res.status(404).json({
@@ -124,20 +107,13 @@ exports.verifyPayment = async (req, res) => {
       });
     }
 
-    /*
-    SEND EMAIL
-    */
     await sendMail(email, filePath);
 
-    /*
-    SUCCESS RESPONSE
-    */
     res.json({
       status: "success",
       fileName,
       downloadUrl: "/pdfs/" + fileName,
     });
-
   } catch (error) {
     console.error("Verify error:", error);
 
