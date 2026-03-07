@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { Mail, Instagram, Send, Loader2 } from "lucide-react";
 import { InputField } from "./FormFields";
 
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "http://localhost:5000")
+  .trim()
+  .replace(/\/$/, "");
+
 const Contact = () => {
   const [status, setStatus] = useState("idle");
 
@@ -13,7 +17,7 @@ const Contact = () => {
     const data = Object.fromEntries(formData);
 
     try {
-      const response = await fetch("http://localhost:5000/api/contact/send", {
+      const response = await fetch(`${API_BASE_URL}/api/contact/send`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),

@@ -1,6 +1,6 @@
 import React from "react";
 import { PDF_PRODUCTS } from "./ResourcesData";
-import PdfCard from "./pdfCard";
+import PdfCard from "./PdfCard";
 
 const PdfStore = ({ userEmail }) => {
 
