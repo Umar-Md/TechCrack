@@ -13,11 +13,12 @@ CREATE ORDER
 exports.createOrder = async (req, res) => {
   try {
     const { amount } = req.body;
+    const parsedAmount = Number(amount);
 
-    if (!amount) {
+    if (!Number.isFinite(parsedAmount) || parsedAmount <= 0) {
       return res.status(400).json({
         status: "error",
-        message: "Amount is required",
+        message: "Valid amount is required",
       });
     }
 
@@ -27,7 +28,7 @@ exports.createOrder = async (req, res) => {
     });
 
     const order = await razorpay.orders.create({
-      amount: Math.round(Number(amount) * 100),
+      amount: Math.round(parsedAmount * 100),
       currency: "INR",
       receipt: "receipt_" + Date.now(),
     });

@@ -34,11 +34,7 @@ const PurchaseButton = ({ product, userEmail }) => {
           ? product.price.replace(/[^0-9.]/g, "")
           : product.price;
 
-      const order = await paymentService.createOrder(
-        cleanPrice,
-        product.id,
-        String(userEmail).trim()
-      );
+      const order = await paymentService.createOrder(cleanPrice);
 
       const options = {
         key: razorpayKey,
@@ -97,7 +93,12 @@ const PurchaseButton = ({ product, userEmail }) => {
       rzp.open();
     } catch (error) {
       console.error("Payment Initiation Error:", error);
-      alert("Could not start payment. Please ensure your backend is reachable.");
+      const backendMessage = error?.response?.data?.message;
+      alert(
+        backendMessage
+          ? `Could not start payment: ${backendMessage}`
+          : "Could not start payment. Please ensure your backend is reachable."
+      );
     }
   };
 
