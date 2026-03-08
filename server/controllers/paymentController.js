@@ -98,7 +98,21 @@ exports.verifyPayment = async (req, res) => {
       });
     }
 
-    const filePath = path.join(__dirname, "..", "assets", "pdfs", fileName);
+    const pdfDir = path.join(__dirname, "..", "assets", "pdfs");
+    let resolvedFileName = fileName;
+    let filePath = path.join(pdfDir, resolvedFileName);
+
+    if (!fs.existsSync(filePath) && fs.existsSync(pdfDir)) {
+      const files = fs.readdirSync(pdfDir);
+      const matched = files.find(
+        (name) => name.toLowerCase() === fileName.toLowerCase()
+      );
+
+      if (matched) {
+        resolvedFileName = matched;
+        filePath = path.join(pdfDir, resolvedFileName);
+      }
+    }
 
     if (!fs.existsSync(filePath)) {
       return res.status(404).json({
@@ -120,8 +134,8 @@ exports.verifyPayment = async (req, res) => {
 
     res.json({
       status: "success",
-      fileName,
-      downloadUrl: "/pdfs/" + fileName,
+      fileName: resolvedFileName,
+      downloadUrl: "/pdfs/" + resolvedFileName,
       emailSent,
       message: emailSent
         ? "Payment verified and PDF emailed."
