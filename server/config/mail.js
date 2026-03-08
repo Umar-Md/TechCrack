@@ -168,7 +168,14 @@ TechCrack Team`,
     console.log("PDF Mail sent successfully to:", to);
   } catch (error) {
     console.error("Mail sending error:", error);
-    throw new Error("Mail sending failed: " + error.message);
+    const code = error?.code ? ` code=${error.code};` : "";
+    const responseCode = error?.responseCode
+      ? ` responseCode=${error.responseCode};`
+      : "";
+    const response = error?.response ? ` response=${error.response};` : "";
+    throw new Error(
+      `Mail sending failed:${code}${responseCode}${response} message=${error.message}`
+    );
   }
 };
 
