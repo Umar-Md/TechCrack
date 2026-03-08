@@ -38,7 +38,7 @@ const postWithFallback = async (path, payload) => {
   for (const baseUrl of baseCandidates) {
     try {
       const response = await axios.post(`${baseUrl}/api/payment${path}`, payload);
-      return response.data;
+      return { data: response.data, baseUrl };
     } catch (error) {
       lastError = error;
       if (error.response) {
@@ -61,6 +61,11 @@ const postWithFallback = async (path, payload) => {
 };
 
 export const paymentService = {
+  _activeApiBaseUrl: normalizeBase(getApiBaseUrl()),
+
+  getActiveApiBaseUrl() {
+    return this._activeApiBaseUrl;
+  },
 
   createOrder: async (amount) => {
 
@@ -68,7 +73,8 @@ export const paymentService = {
 
       console.log("Creating order with amount:", amount);
 
-      const data = await postWithFallback("/create-order", { amount });
+      const { data, baseUrl } = await postWithFallback("/create-order", { amount });
+      paymentService._activeApiBaseUrl = baseUrl;
       console.log("CreateOrder response:", data);
       return data;
 
@@ -89,7 +95,8 @@ export const paymentService = {
 
       console.log("VerifyPayment sending:", paymentData);
 
-      const data = await postWithFallback("/verify", paymentData);
+      const { data, baseUrl } = await postWithFallback("/verify", paymentData);
+      paymentService._activeApiBaseUrl = baseUrl;
       console.log("VerifyPayment response:", data);
       return data;
 

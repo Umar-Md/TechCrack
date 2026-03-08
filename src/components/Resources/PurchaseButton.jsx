@@ -70,7 +70,16 @@ const PurchaseButton = ({ product, userEmail }) => {
 
             if (result.status === "success") {
               if (result.emailSent === false) {
-                alert("Payment verified, but email delivery failed. Please contact support.");
+                const apiBase = paymentService.getActiveApiBaseUrl();
+                const fileUrl = result.downloadUrl
+                  ? `${apiBase}${result.downloadUrl}`
+                  : null;
+
+                if (fileUrl) {
+                  window.open(fileUrl, "_blank", "noopener,noreferrer");
+                }
+
+                alert("Payment verified. Email failed, so we opened your PDF download directly.");
               } else {
                 alert("Payment successful. PDF has been sent to your email.");
               }
