@@ -162,15 +162,24 @@ exports.verifyPayment = async (req, res) => {
       console.error("Email send failed, continuing with download:", mailError);
     }
 
+    if (!emailSent) {
+      return res.status(502).json({
+        status: "error",
+        code: "EMAIL_DELIVERY_FAILED",
+        paymentVerified: true,
+        fileName: resolvedFileName,
+        message: "Payment verified, but PDF email delivery failed.",
+        emailError,
+      });
+    }
+
     res.json({
       status: "success",
       fileName: resolvedFileName,
       downloadUrl: "/pdfs/" + resolvedFileName,
-      emailSent,
-      message: emailSent
-        ? "Payment verified and PDF emailed."
-        : "Payment verified. Email failed, but direct download is available.",
-      emailError,
+      emailSent: true,
+      message: "Payment verified and PDF emailed.",
+      emailError: null,
     });
   } catch (error) {
     console.error("Verify error:", error);

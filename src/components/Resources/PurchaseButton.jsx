@@ -83,7 +83,12 @@ const PurchaseButton = ({ product, userEmail }) => {
           } catch (err) {
             console.error("Verification Error:", err);
             const backendMessage = err?.response?.data?.message;
-            alert(`Verification error${backendMessage ? `: ${backendMessage}` : "."}`);
+            const emailError = err?.response?.data?.emailError;
+            alert(
+              `Verification error${backendMessage ? `: ${backendMessage}` : "."}${
+                emailError ? ` Details: ${emailError}` : ""
+              }`
+            );
           }
         },
         modal: {

@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const dotenv = require("dotenv");
+const { verifyMailTransport } = require("./config/mail");
 
 dotenv.config();
 
@@ -58,6 +59,34 @@ app.get("/", (_req, res) => {
 
 app.get("/api/health", (_req, res) => {
   res.status(200).json({ status: "ok" });
+});
+
+app.get("/api/health/mail", async (_req, res) => {
+  const hasMailEnv =
+    Boolean(process.env.EMAIL_USER) &&
+    Boolean(process.env.EMAIL_PASS) &&
+    Boolean(process.env.RECEIVER_EMAIL);
+
+  if (!hasMailEnv) {
+    return res.status(500).json({
+      status: "error",
+      message: "Mail environment variables are missing",
+    });
+  }
+
+  const result = await verifyMailTransport();
+  if (!result.ok) {
+    return res.status(502).json({
+      status: "error",
+      message: "Mail transport verification failed",
+      details: result.error,
+    });
+  }
+
+  return res.status(200).json({
+    status: "ok",
+    message: "Mail transport is ready",
+  });
 });
 
 app.listen(PORT, () => {

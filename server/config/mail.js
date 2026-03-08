@@ -179,6 +179,22 @@ TechCrack Team`,
   }
 };
 
+const verifyMailTransport = async () => {
+  try {
+    await transporter.verify();
+    return { ok: true };
+  } catch (error) {
+    return {
+      ok: false,
+      error: {
+        message: error?.message || "Unknown mail transport error",
+        code: error?.code || null,
+        responseCode: error?.responseCode || null,
+      },
+    };
+  }
+};
+
 /*
 ================================
 EXPORT BOTH
@@ -187,4 +203,5 @@ EXPORT BOTH
 module.exports = {
   transporter,
   sendMail,
+  verifyMailTransport,
 };
