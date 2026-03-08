@@ -4,9 +4,6 @@ import { PROJECTS_DATA } from './ProjectData';
 import { ProjectsHeader } from './ProjectsHeader';
 
 const Projects = () => {
-  // Using spread to double data for display if list is short
-  const displayProjects = [...PROJECTS_DATA, ...PROJECTS_DATA];
-
   return (
     <section id="projects" className="relative z-20 py-24 px-6 bg-black border-t border-white/5">
       <div className="max-w-7xl mx-auto">
@@ -14,10 +11,12 @@ const Projects = () => {
         {/* Unified Header with the Button */}
         <ProjectsHeader />
 
-        {/* Project Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {displayProjects.map((project, index) => (
-            <ProjectCard key={index} {...project} />
+        {/* Project Carousel */}
+        <div className="mt-8 flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {PROJECTS_DATA.map((project) => (
+            <div key={project.id} className="min-w-[85%] snap-start md:min-w-[48%] lg:min-w-[38%]">
+              <ProjectCard {...project} />
+            </div>
           ))}
         </div>
       </div>

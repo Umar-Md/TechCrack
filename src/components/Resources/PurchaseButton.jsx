@@ -94,10 +94,11 @@ const PurchaseButton = ({ product, userEmail }) => {
     } catch (error) {
       console.error("Payment Initiation Error:", error);
       const backendMessage = error?.response?.data?.message;
+      const fallbackMessage = error?.message;
       alert(
         backendMessage
           ? `Could not start payment: ${backendMessage}`
-          : "Could not start payment. Please ensure your backend is reachable."
+          : `Could not start payment${fallbackMessage ? `: ${fallbackMessage}` : ". Please ensure your backend is reachable."}`
       );
     }
   };
@@ -113,9 +114,10 @@ const PurchaseButton = ({ product, userEmail }) => {
           : "bg-cyan-500 hover:bg-cyan-400 text-black"
       }`}
     >
-      Buy for ₹{product.price}
+      Buy for Rs. {product.price}
     </button>
   );
 };
 
 export default PurchaseButton;
+

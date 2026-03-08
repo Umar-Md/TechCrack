@@ -21,9 +21,8 @@ const PdfCard = ({ product, userEmail }) => {
       </p>
 
       <div className="flex items-center justify-between border-t border-white/5 pt-6">
-
         <span className="text-2xl font-black text-white">
-          ₹{product.price}
+          Rs. {product.price}
         </span>
 
         {/* Pass user email */}
@@ -41,3 +40,4 @@ const PdfCard = ({ product, userEmail }) => {
 };
 
 export default PdfCard;
+

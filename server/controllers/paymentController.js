@@ -14,6 +14,15 @@ exports.createOrder = async (req, res) => {
   try {
     const { amount } = req.body;
     const parsedAmount = Number(amount);
+    const keyId = process.env.RAZORPAY_KEY_ID;
+    const keySecret = process.env.RAZORPAY_KEY_SECRET;
+
+    if (!keyId || !keySecret) {
+      return res.status(500).json({
+        status: "error",
+        message: "Razorpay keys are missing on server",
+      });
+    }
 
     if (!Number.isFinite(parsedAmount) || parsedAmount <= 0) {
       return res.status(400).json({
@@ -23,8 +32,8 @@ exports.createOrder = async (req, res) => {
     }
 
     const razorpay = new Razorpay({
-      key_id: process.env.RAZORPAY_KEY_ID,
-      key_secret: process.env.RAZORPAY_KEY_SECRET,
+      key_id: keyId,
+      key_secret: keySecret,
     });
 
     const order = await razorpay.orders.create({
@@ -58,6 +67,14 @@ exports.verifyPayment = async (req, res) => {
       email,
       pdfId,
     } = req.body;
+    const keySecret = process.env.RAZORPAY_KEY_SECRET;
+
+    if (!keySecret) {
+      return res.status(500).json({
+        status: "error",
+        message: "Razorpay key secret is missing on server",
+      });
+    }
 
     if (!email) {
       return res.status(400).json({
@@ -69,7 +86,7 @@ exports.verifyPayment = async (req, res) => {
     const body = razorpay_order_id + "|" + razorpay_payment_id;
 
     const expectedSignature = crypto
-      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+      .createHmac("sha256", keySecret)
       .update(body)
       .digest("hex");
 
