@@ -86,11 +86,12 @@ const PurchaseButton = ({ product, userEmail }) => {
               };
 
               const fileName = result.fileName || fileMap[normalizedProductId];
+              const downloadPath = result.downloadUrl || (fileName ? `/pdfs/${fileName}` : "");
 
-              if (fileName) {
+              if (fileName && downloadPath) {
                 // We use a direct link because your backend Express app 
                 // already sends 'Content-Disposition: attachment'
-                const downloadUrl = `${apiBaseUrl}/pdfs/${fileName}`;
+                const downloadUrl = `${apiBaseUrl}${downloadPath}`;
                 
                 const link = document.createElement("a");
                 link.href = downloadUrl;
@@ -99,16 +100,21 @@ const PurchaseButton = ({ product, userEmail }) => {
                 link.click();
                 link.remove();
 
-                alert("Success! Your PDF is downloading and a copy was sent to your email.");
+                if (result.emailSent === false) {
+                  alert("Payment verified. PDF download started, but email delivery failed.");
+                } else {
+                  alert("Success! Your PDF is downloading and a copy was sent to your email.");
+                }
               } else {
                 alert("Payment verified, but file not found in map. Please check your email.");
               }
             } else {
-              alert("Payment verification failed.");
+              alert(result.message || "Payment verification failed.");
             }
           } catch (err) {
             console.error("Verification Error:", err);
-            alert("Verification error. Please check your email for the PDF!");
+            const backendMessage = err?.response?.data?.message;
+            alert(`Verification error${backendMessage ? `: ${backendMessage}` : "."}`);
           }
         },
         modal: {

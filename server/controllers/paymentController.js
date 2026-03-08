@@ -107,12 +107,26 @@ exports.verifyPayment = async (req, res) => {
       });
     }
 
-    await sendMail(email, filePath);
+    let emailSent = false;
+    let emailError = null;
+
+    try {
+      await sendMail(email, filePath);
+      emailSent = true;
+    } catch (mailError) {
+      emailError = mailError.message;
+      console.error("Email send failed, continuing with download:", mailError);
+    }
 
     res.json({
       status: "success",
       fileName,
       downloadUrl: "/pdfs/" + fileName,
+      emailSent,
+      message: emailSent
+        ? "Payment verified and PDF emailed."
+        : "Payment verified. Email failed, but direct download is available.",
+      emailError,
     });
   } catch (error) {
     console.error("Verify error:", error);
