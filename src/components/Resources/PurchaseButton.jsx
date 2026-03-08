@@ -92,13 +92,16 @@ const PurchaseButton = ({ product, userEmail }) => {
                 // We use a direct link because your backend Express app 
                 // already sends 'Content-Disposition: attachment'
                 const downloadUrl = `${apiBaseUrl}${downloadPath}`;
-                
-                const link = document.createElement("a");
-                link.href = downloadUrl;
-                link.setAttribute("download", fileName);
-                document.body.appendChild(link);
-                link.click();
-                link.remove();
+                const opened = window.open(downloadUrl, "_blank", "noopener,noreferrer");
+
+                if (!opened) {
+                  const link = document.createElement("a");
+                  link.href = downloadUrl;
+                  link.setAttribute("download", fileName);
+                  document.body.appendChild(link);
+                  link.click();
+                  link.remove();
+                }
 
                 if (result.emailSent === false) {
                   alert("Payment verified. PDF download started, but email delivery failed.");
