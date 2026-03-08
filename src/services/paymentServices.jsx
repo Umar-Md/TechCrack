@@ -42,7 +42,13 @@ const postWithFallback = async (path, payload) => {
     } catch (error) {
       lastError = error;
       if (error.response) {
-        throw error;
+        const status = Number(error.response.status);
+        const shouldRetryOnAnotherBase =
+          status === 404 || status === 405 || status >= 500;
+
+        if (!shouldRetryOnAnotherBase) {
+          throw error;
+        }
       }
       console.warn(`Payment API unreachable at ${baseUrl}`, error.message);
     }

@@ -21,12 +21,7 @@ const PurchaseButton = ({ product, userEmail }) => {
     }
 
     try {
-      const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID;
-      if (!razorpayKey || !String(razorpayKey).trim()) {
-        console.error("Missing VITE_RAZORPAY_KEY_ID in frontend environment.");
-        alert("Payment setup is incomplete. Razorpay key is missing.");
-        return;
-      }
+      const envRazorpayKey = String(import.meta.env.VITE_RAZORPAY_KEY_ID || "").trim();
 
       // 2. Prepare Price and Initiate Order
       const cleanPrice =
@@ -35,9 +30,15 @@ const PurchaseButton = ({ product, userEmail }) => {
           : product.price;
 
       const order = await paymentService.createOrder(cleanPrice);
+      const activeRazorpayKey = String(order?.keyId || envRazorpayKey).trim();
+
+      if (!activeRazorpayKey) {
+        alert("Payment setup is incomplete. Razorpay key is missing.");
+        return;
+      }
 
       const options = {
-        key: razorpayKey,
+        key: activeRazorpayKey,
         amount: order.amount,
         currency: order.currency,
         name: "TechCrack",
@@ -94,10 +95,11 @@ const PurchaseButton = ({ product, userEmail }) => {
     } catch (error) {
       console.error("Payment Initiation Error:", error);
       const backendMessage = error?.response?.data?.message;
+      const backendDetails = error?.response?.data?.details;
       const fallbackMessage = error?.message;
       alert(
         backendMessage
-          ? `Could not start payment: ${backendMessage}`
+          ? `Could not start payment: ${backendMessage}${backendDetails ? ` (${backendDetails})` : ""}`
           : `Could not start payment${fallbackMessage ? `: ${fallbackMessage}` : ". Please ensure your backend is reachable."}`
       );
     }

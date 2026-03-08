@@ -2,9 +2,53 @@ import React, { useState } from "react";
 import { Mail, Instagram, Send, Loader2 } from "lucide-react";
 import { InputField } from "./FormFields";
 
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "http://localhost:5000")
-  .trim()
-  .replace(/\/$/, "");
+const DEFAULT_PROD_API_BASE_URL = "https://techcrack-vmke.onrender.com";
+const normalizeBase = (url) => String(url || "").trim().replace(/\/$/, "");
+
+const getContactApiBases = () => {
+  const envBase = normalizeBase(import.meta.env.VITE_API_BASE_URL);
+  const browserBase =
+    typeof window !== "undefined" ? normalizeBase(window.location.origin) : "";
+
+  return [envBase, browserBase, DEFAULT_PROD_API_BASE_URL, "http://localhost:5000"]
+    .filter(Boolean)
+    .filter((value, index, arr) => arr.indexOf(value) === index);
+};
+
+const postContactWithFallback = async (payload) => {
+  const apiBases = getContactApiBases();
+  let lastError = null;
+
+  for (const baseUrl of apiBases) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+
+    try {
+      const response = await fetch(`${baseUrl}/api/contact/send`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+      });
+      clearTimeout(timeout);
+
+      if (!response.ok) {
+        const errText = await response.text();
+        throw new Error(errText || "Contact API request failed");
+      }
+
+      return;
+    } catch (error) {
+      clearTimeout(timeout);
+      lastError = error;
+      console.warn(`Contact API failed at ${baseUrl}`, error.message);
+    }
+  }
+
+  throw new Error(
+    `Contact API unreachable. Tried: ${apiBases.join(", ")}. ${lastError?.message || ""}`.trim()
+  );
+};
 
 const Contact = () => {
   const [status, setStatus] = useState("idle");
@@ -17,18 +61,9 @@ const Contact = () => {
     const data = Object.fromEntries(formData);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/contact/send`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        setStatus("success");
-        e.target.reset();
-      } else {
-        setStatus("error");
-      }
+      await postContactWithFallback(data);
+      setStatus("success");
+      e.target.reset();
     } catch (error) {
       console.error("Form Error:", error);
       setStatus("error");

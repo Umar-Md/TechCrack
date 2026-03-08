@@ -42,13 +42,25 @@ exports.createOrder = async (req, res) => {
       receipt: "receipt_" + Date.now(),
     });
 
-    res.json(order);
+    res.json({
+      ...order,
+      keyId,
+    });
   } catch (error) {
     console.error("Create order error:", error);
+    const razorpayErrorMessage =
+      error?.error?.description || error?.description || error?.message;
+    const isAuthIssue =
+      /auth|authentication|key|secret|credential/i.test(
+        String(razorpayErrorMessage || "")
+      );
 
     res.status(500).json({
       status: "error",
-      message: "Order creation failed",
+      message: isAuthIssue
+        ? "Razorpay authentication failed. Check server key ID/secret and test-live mode."
+        : "Order creation failed",
+      details: razorpayErrorMessage || null,
     });
   }
 };
