@@ -72,44 +72,10 @@ const PurchaseButton = ({ product, userEmail }) => {
             });
 
             if (result.status === "success") {
-              // 4. Download Logic - Aligned with your Backend /pdfs route
-              const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || "http://localhost:5000").replace(/\/$/, "");
-              
-              // Map product IDs to actual filenames in E:\TechCrack\server\assets\pdfs\
-              const fileMap = {
-                java: "Java.pdf",
-                javascript: "JavaScript.pdf",
-                python: "Python.pdf",
-                sql: "sql.pdf",
-                email_resume_templates: "Email_Resume_templates.pdf",
-                "email-resume-templates": "Email_Resume_templates.pdf",
-              };
-
-              const fileName = result.fileName || fileMap[normalizedProductId];
-              const downloadPath = result.downloadUrl || (fileName ? `/pdfs/${fileName}` : "");
-
-              if (fileName && downloadPath) {
-                // We use a direct link because your backend Express app 
-                // already sends 'Content-Disposition: attachment'
-                const downloadUrl = `${apiBaseUrl}${downloadPath}`;
-                const opened = window.open(downloadUrl, "_blank", "noopener,noreferrer");
-
-                if (!opened) {
-                  const link = document.createElement("a");
-                  link.href = downloadUrl;
-                  link.setAttribute("download", fileName);
-                  document.body.appendChild(link);
-                  link.click();
-                  link.remove();
-                }
-
-                if (result.emailSent === false) {
-                  alert("Payment verified. PDF download started, but email delivery failed.");
-                } else {
-                  alert("Success! Your PDF is downloading and a copy was sent to your email.");
-                }
+              if (result.emailSent === false) {
+                alert("Payment verified, but email delivery failed. Please contact support.");
               } else {
-                alert("Payment verified, but file not found in map. Please check your email.");
+                alert("Payment successful. PDF has been sent to your email.");
               }
             } else {
               alert(result.message || "Payment verification failed.");
