@@ -2,11 +2,13 @@ import React from 'react';
 import { ServiceCard } from './ServiceCard';
 import { SERVICES_LIST } from './ServiceData';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const ServicesHeader = () => {
+  const navigate = useNavigate();
 
   const handleContactClick = () => {
-    window.location.href = "/contact";
+    navigate('/contact');
   };
 
   return (
@@ -46,7 +48,7 @@ const ServicesHeader = () => {
           duration-300
         "
       >
-        Discuss Your Requirement →
+        Discuss Your Requirement {"\u2192"}
       </motion.button>
 
     </div>
@@ -85,3 +87,4 @@ const Services = () => {
 };
 
 export default Services;
+
