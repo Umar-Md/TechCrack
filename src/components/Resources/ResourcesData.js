@@ -5,11 +5,11 @@ export const PDF_PRODUCTS = [
     // Changed id to match 'java.pdf'
     id: 'java', 
     title: "Java Interview Guide",
-    price: 1,
+    price: 10,
     desc: "Comprehensive Java Q&A for top tech companies.",
     icon: Zap,
-    color: "text-yellow-400"
-  },
+    color: "text-yellow-400"              
+  },       
   {
     // Changed id to match 'JavaScript.pdf'
     id: 'JavaScript', 
